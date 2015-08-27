@@ -1,3 +1,5 @@
+import java.util.NoSuchElementException;
+
 /**
  * Your implementation of a SinglyLinkedList
  *
@@ -19,7 +21,7 @@ public class SinglyLinkedList<T> implements LinkedListInterface<T> {
             throw new IndexOutOfBoundsException("Index number "
                     + "negative or too large");
         }
-        LinkedListNode<T> newnode = new LinkedListNode<T>(data, null);
+        LinkedListNode<T> newnode = new LinkedListNode<>(data, null);
         if (index == 0) {
             head = newnode;
             size++;
@@ -60,7 +62,6 @@ public class SinglyLinkedList<T> implements LinkedListInterface<T> {
             throw new IndexOutOfBoundsException("Index number "
                     + "negative or too large");
         }
-
         LinkedListNode<T> current = head;
         LinkedListNode<T> previous = null;
         if (index == 0) {
@@ -119,7 +120,6 @@ public class SinglyLinkedList<T> implements LinkedListInterface<T> {
             size--;
             return temp.getData();
         }
-        return head.getData();
 
     }
 
@@ -144,13 +144,42 @@ public class SinglyLinkedList<T> implements LinkedListInterface<T> {
 
     @Override
     public int removeFirstOccurrence(T data) {
-        return 0;
+        if (data == null) {
+            throw new IllegalArgumentException("Data cannot be null");
+        }
+
+        LinkedListNode<T> current = head;
+        LinkedListNode<T> previous = null;
+        if (head.getData().equals(data)) {
+            head = head.getNext();
+            return 0;
+        } else {
+            for (int i = 1; i < size; i++) {
+                if (current.getData().equals(data)) {
+                    previous.setNext(current.getNext());
+                    size--;
+                    return i;
+                } else {
+                    previous = current;
+                    current = current.getNext();
+                }
+            }
+        }
+        throw new NoSuchElementException("Data not found in list");
+
     }
 
-  //  @Override
-   // public Object[] toArray() {
-//
-   // }
+    @Override
+    public Object[] toArray() {
+
+        Object[] newarray = new Object[size];
+        LinkedListNode<T> temp = head;
+        for (int i = 0; i < size; i++) {
+            newarray[i] = temp;
+            temp = temp.getNext();
+        }
+        return newarray;
+    }
 
     @Override
     public boolean isEmpty() {
