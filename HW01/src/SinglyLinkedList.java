@@ -26,12 +26,14 @@ public class SinglyLinkedList<T> implements LinkedListInterface<T> {
             head = newnode;
             size++;
         } else {
-            LinkedListNode<T> oldindex = head;
-            for (int i = 1; i < index; i++) {
-                oldindex = oldindex.getNext();
+            LinkedListNode<T> temp = head;
+            LinkedListNode<T> previous = null;
+            for (int i = 0; i < index; i++) {
+                previous = temp;
+                temp = temp.getNext();
             }
-            newnode.setNext(oldindex.getNext());
-            oldindex.setNext(newnode.getNext());
+            newnode.setNext(previous.getNext());
+            previous.setNext(newnode);
             size++;
         }
 
@@ -47,7 +49,7 @@ public class SinglyLinkedList<T> implements LinkedListInterface<T> {
             return head.getData();
         } else {
             LinkedListNode<T> getnode = head;
-            for (int i = 1; i < index; i++) {
+            for (int i = 1; i <= index; i++) {
                 getnode = getnode.getNext();
             }
             return getnode.getData();
@@ -69,7 +71,7 @@ public class SinglyLinkedList<T> implements LinkedListInterface<T> {
             size--;
             return current.getData();
         } else {
-            for (int i = 1; i < index; i++) {
+            for (int i = 1; i <= index; i++) {
                 previous = current;
                 current  = current.getNext();
             }
@@ -175,7 +177,7 @@ public class SinglyLinkedList<T> implements LinkedListInterface<T> {
         Object[] newarray = new Object[size];
         LinkedListNode<T> temp = head;
         for (int i = 0; i < size; i++) {
-            newarray[i] = temp;
+            newarray[i] = temp.getData();
             temp = temp.getNext();
         }
         return newarray;
@@ -203,6 +205,7 @@ public class SinglyLinkedList<T> implements LinkedListInterface<T> {
     @Override
     public LinkedListNode<T> getHead() {
         // DO NOT MODIFY!
-        return head;
+            return head;
+
     }
 }
