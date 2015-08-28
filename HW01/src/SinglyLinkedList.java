@@ -41,7 +41,7 @@ public class SinglyLinkedList<T> implements LinkedListInterface<T> {
 
     @Override
     public T get(int index) {
-        if (index < 0 || index > size) {
+        if (index < 0 || index >= size) {
             throw new IndexOutOfBoundsException("Index number "
                     + "negative or too large");
         }
@@ -60,7 +60,7 @@ public class SinglyLinkedList<T> implements LinkedListInterface<T> {
 
     @Override
     public T removeAtIndex(int index) {
-        if (index < 0 || index > size) {
+        if (index < 0 || index >= size) {
             throw new IndexOutOfBoundsException("Index number "
                     + "negative or too large");
         }
@@ -128,7 +128,7 @@ public class SinglyLinkedList<T> implements LinkedListInterface<T> {
     @Override
     public T removeFromBack() {
 
-        if (head == null) {
+        if (isEmpty()) {
             return null;
         }
         LinkedListNode<T> current = head;
@@ -138,7 +138,7 @@ public class SinglyLinkedList<T> implements LinkedListInterface<T> {
             previous = current;
             current = current.getNext();
         }
-        previous.setNext(null);
+        //previous.setNext(null);
         size--;
         return current.getData();
     }
@@ -149,14 +149,16 @@ public class SinglyLinkedList<T> implements LinkedListInterface<T> {
         if (data == null) {
             throw new IllegalArgumentException("Data cannot be null");
         }
-
+        if (isEmpty()) {
+            throw new NoSuchElementException("List is empty - no such element");
+        }
         LinkedListNode<T> current = head;
         LinkedListNode<T> previous = null;
         if (head.getData().equals(data)) {
             head = head.getNext();
             return 0;
         } else {
-            for (int i = 1; i < size; i++) {
+            for (int i = 0; i < size; i++) {
                 if (current.getData().equals(data)) {
                     previous.setNext(current.getNext());
                     size--;
@@ -205,7 +207,7 @@ public class SinglyLinkedList<T> implements LinkedListInterface<T> {
     @Override
     public LinkedListNode<T> getHead() {
         // DO NOT MODIFY!
-            return head;
+        return head;
 
     }
 }
